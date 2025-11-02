@@ -1,0 +1,229 @@
+{
+  "componentsToGenerate": [
+    "Navigation",
+    "Hero",
+    "FeaturedDishes",
+    "QuickActions",
+    "MenuSection",
+    "MenuItem",
+    "MenuFilter",
+    "OrderingSystem",
+    "ShoppingCart",
+    "ReservationForm",
+    "LocationMap",
+    "Testimonials",
+    "AboutSection",
+    "ContactForm",
+    "Footer"
+  ],
+  "estimatedChallenges": [
+    {
+      "component": "Navigation",
+      "challenge": "Mobile menu toggle with smooth animations and proper state management",
+      "mitigation": "Use React useState for menu state, implement hamburger icon with CSS transitions, ensure proper z-index layering"
+    },
+    {
+      "component": "MenuSection",
+      "challenge": "Dynamic rendering of menu items with categories, filtering, and search",
+      "mitigation": "Create structured menu data array, use map() with proper keys, implement filter logic with useMemo for performance"
+    },
+    {
+      "component": "MenuItem",
+      "challenge": "Complex card layout with image, description, price, dietary icons, and add-to-cart button",
+      "mitigation": "Use CSS Grid/Flexbox for responsive layout, Next.js Image for optimization, clear prop structure"
+    },
+    {
+      "component": "ShoppingCart",
+      "challenge": "State management across components, quantity updates, price calculations",
+      "mitigation": "Use React Context or simple prop drilling for MVP, implement clear add/remove/update functions, calculate totals with reduce()"
+    },
+    {
+      "component": "OrderingSystem",
+      "challenge": "Multi-step checkout flow with validation and order summary",
+      "mitigation": "Break into smaller sub-components (CartReview, DeliveryOptions, CheckoutForm), use controlled inputs with validation"
+    },
+    {
+      "component": "ReservationForm",
+      "challenge": "Date/time picker integration, form validation, availability checking",
+      "mitigation": "Use HTML5 date/time inputs for simplicity, implement client-side validation, show clear error messages"
+    },
+    {
+      "component": "LocationMap",
+      "challenge": "Embedding interactive map without external API complexity",
+      "mitigation": "Use iframe embed of Google Maps with restaurant location, provide fallback static map image"
+    },
+    {
+      "component": "FeaturedDishes",
+      "challenge": "Image carousel/slider with smooth transitions and touch support",
+      "mitigation": "Implement simple CSS-based slider or use transform transitions, ensure mobile swipe gestures work"
+    },
+    {
+      "component": "Testimonials",
+      "challenge": "Dynamic testimonial display with ratings and customer photos",
+      "mitigation": "Create testimonial data array, use star rating component, implement rotation or grid layout"
+    },
+    {
+      "component": "ContactForm",
+      "challenge": "Form validation, submission handling, success/error states",
+      "mitigation": "Use controlled components, implement validation on submit, show clear feedback messages"
+    }
+  ],
+  "fixerContext": {
+    "expectedStructure": "Next.js 14+ App Router structure with components separated into /components folder, pages in /app folder using page.tsx convention",
+    "importPaths": "All component imports should use relative paths from app/page.tsx (e.g., '../components/Navigation'). Ensure consistent import structure.",
+    "commonIssues": [
+      "Missing 'use client' directive in interactive components (forms, buttons, state management)",
+      "Import path mismatches between component definitions and usage",
+      "Image component missing required props (width, height, alt)",
+      "Unhandled form submissions without preventDefault",
+      "Missing key props in mapped arrays",
+      "CSS module imports without proper naming",
+      "Async components without proper error boundaries",
+      "Missing TypeScript types for props (if using TS)"
+    ],
+    "componentDependencies": {
+      "Navigation": [
+        "depends on: none",
+        "used by: all pages"
+      ],
+      "Hero": [
+        "depends on: none",
+        "used by: home page"
+      ],
+      "FeaturedDishes": [
+        "depends on: MenuItem",
+        "used by: home page"
+      ],
+      "MenuSection": [
+        "depends on: MenuItem, MenuFilter",
+        "used by: menu page"
+      ],
+      "MenuItem": [
+        "depends on: none",
+        "used by: MenuSection, FeaturedDishes"
+      ],
+      "ShoppingCart": [
+        "depends on: MenuItem data structure",
+        "used by: menu, order pages"
+      ],
+      "OrderingSystem": [
+        "depends on: ShoppingCart",
+        "used by: order page"
+      ],
+      "ReservationForm": [
+        "depends on: none",
+        "used by: reservations page"
+      ],
+      "LocationMap": [
+        "depends on: none",
+        "used by: contact page, home page"
+      ],
+      "Footer": [
+        "depends on: none",
+        "used by: all pages"
+      ]
+    },
+    "dataStructures": {
+      "menuItem": {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "price": "number",
+        "category": "string (appetizer|main|dessert|drink)",
+        "image": "string (path)",
+        "dietary": "array of strings (vegan|vegetarian|gluten-free|spicy)",
+        "popular": "boolean"
+      },
+      "cartItem": {
+        "menuItem": "MenuItem object",
+        "quantity": "number",
+        "customizations": "string (optional)"
+      },
+      "reservation": {
+        "date": "string",
+        "time": "string",
+        "partySize": "number",
+        "name": "string",
+        "email": "string",
+        "phone": "string",
+        "specialRequests": "string (optional)"
+      }
+    },
+    "stylingApproach": "Use Tailwind CSS for utility-first styling with custom color palette. Implement responsive breakpoints (sm, md, lg, xl). Use CSS modules for complex component-specific styles if needed.",
+    "stateManagement": "For MVP, use React useState and props for local state. Shopping cart can use Context API if needed. Keep state management simple and predictable.",
+    "performanceConsiderations": [
+      "Use Next.js Image component for all food photos",
+      "Implement lazy loading for below-fold content",
+      "Optimize menu data loading (consider pagination if menu is large)",
+      "Use proper caching strategies for static content",
+      "Minimize JavaScript bundle size by code splitting"
+    ],
+    "accessibilityRequirements": [
+      "Semantic HTML elements (nav, main, section, article)",
+      "Proper heading hierarchy (h1, h2, h3)",
+      "Alt text for all images",
+      "ARIA labels for interactive elements",
+      "Keyboard navigation support",
+      "Focus indicators on interactive elements",
+      "Color contrast ratios meeting WCAG AA standards"
+    ]
+  },
+  "fileStructure": {
+    "app": {
+      "page.tsx": "Home page with Hero, FeaturedDishes, QuickActions, Testimonials",
+      "menu/page.tsx": "Menu page with MenuSection and filtering",
+      "order/page.tsx": "Online ordering page with OrderingSystem",
+      "reservations/page.tsx": "Reservation booking page with ReservationForm",
+      "about/page.tsx": "About page with restaurant story and team",
+      "contact/page.tsx": "Contact page with LocationMap and ContactForm",
+      "layout.tsx": "Root layout with Navigation and Footer"
+    },
+    "components": {
+      "Navigation.tsx": "Main navigation header",
+      "Hero.tsx": "Homepage hero section",
+      "FeaturedDishes.tsx": "Featured dishes carousel/grid",
+      "QuickActions.tsx": "CTA buttons for order/reserve",
+      "MenuSection.tsx": "Menu display with categories",
+      "MenuItem.tsx": "Individual menu item card",
+      "MenuFilter.tsx": "Category and dietary filters",
+      "OrderingSystem.tsx": "Complete ordering flow",
+      "ShoppingCart.tsx": "Cart display and management",
+      "ReservationForm.tsx": "Reservation booking form",
+      "LocationMap.tsx": "Embedded map component",
+      "Testimonials.tsx": "Customer testimonials section",
+      "AboutSection.tsx": "About content sections",
+      "ContactForm.tsx": "Contact inquiry form",
+      "Footer.tsx": "Site footer"
+    },
+    "data": {
+      "menuData.ts": "Menu items array with all dishes",
+      "testimonialsData.ts": "Customer testimonials",
+      "restaurantInfo.ts": "Hours, location, contact details"
+    },
+    "styles": {
+      "globals.css": "Global styles and Tailwind imports"
+    }
+  },
+  "implementationOrder": [
+    "1. Set up Next.js project structure and Tailwind CSS",
+    "2. Create data files (menuData, restaurantInfo)",
+    "3. Build Navigation and Footer components",
+    "4. Implement layout.tsx with Navigation and Footer",
+    "5. Create Hero component for homepage",
+    "6. Build MenuItem component (reusable)",
+    "7. Implement MenuSection with filtering",
+    "8. Create menu page",
+    "9. Build ShoppingCart component",
+    "10. Implement OrderingSystem",
+    "11. Create order page",
+    "12. Build ReservationForm",
+    "13. Create reservations page",
+    "14. Implement LocationMap and ContactForm",
+    "15. Create contact page",
+    "16. Build AboutSection",
+    "17. Create about page",
+    "18. Add FeaturedDishes and Testimonials to homepage",
+    "19. Implement responsive design refinements",
+    "20. Test all interactive features and forms"
+  ]
+}
